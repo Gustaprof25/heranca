@@ -1,0 +1,74 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package webII.mapeamento.heranca.controller;
+
+import javax.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+import webII.mapeamento.heranca.entity.PessoaJuridica;
+import webII.mapeamento.heranca.repository.PessoaJuridicaRepository;
+
+/**
+ *
+ * @author CHFS
+ */
+@Transactional
+@Controller
+@RequestMapping("pessoajuridica")
+public class PessoaJuridicaController {
+    
+    
+    @Autowired
+    PessoaJuridicaRepository repository;
+     
+   
+    @GetMapping("/list")
+    public ModelAndView listar(ModelMap model){
+        model.addAttribute("pessoajuridica", repository.pessoaJuridica());
+        //return new 
+        return new ModelAndView("/pessoajuridica/list", model);
+    }
+        
+    @GetMapping("/form")
+    public String form(PessoaJuridica pessoaJuridica){
+        return "/pessoajuridica/form";
+    }
+    
+    @PostMapping("/save")
+    public ModelAndView save(PessoaJuridica pessoaJuridica){
+        repository.save(pessoaJuridica);
+        return new ModelAndView("redirect:/pessoajuridica/list");
+    }
+    
+    @GetMapping("/remove/{id}")
+    public ModelAndView remove(@PathVariable("id") int id){
+        repository.remove(id);
+        return new ModelAndView("redirect:/pessoajuridica/list");
+    }
+
+    /**
+     * @param id
+     * @return
+     * @PathVariable é utilizado quando o valor da variável é passada diretamente na URL
+     */
+    @GetMapping("/edit/{id}")
+    public ModelAndView edit(@PathVariable("id") int id, ModelMap model) {
+        model.addAttribute("pessoaJuridica", repository.pessoaJuridica(id));
+        return new ModelAndView("/pessoajuridica/form", model);
+    }
+
+    @PostMapping("/update")
+    public ModelAndView update(PessoaJuridica pessoaJuridica) {
+        repository.update(pessoaJuridica);
+        return new ModelAndView("redirect:/pessoajuridica/list");
+    }
+    
+}

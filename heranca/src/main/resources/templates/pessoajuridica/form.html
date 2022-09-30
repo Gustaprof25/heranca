@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+          integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <style>
+        table {
+            margin-top: 20px;
+            text-align: center;
+            border: solid 1px lightgray;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>FORM</h1>
+    <form th:action="${pessoaJuridica.id == 0} ? @{/pessoajuridica/save} : @{/pessoajuridica/update}"
+          th:object="${pessoaJuridica}" method="post" class="form-row">
+        <div class="col">
+            <input type="hidden" th:field="*{id}">
+            <input class="form-control" type="text" th:field="*{nome}" placeholder="Nome">
+        </div>
+        <div class="col">
+            <input class="form-control" type="text" th:field="*{cnpj}" placeholder="Cnpj">
+        </div>
+        <div class="col">
+            <input class="btn btn-primary" type="submit" value="Enviar">
+        </div>
+    </form>
+</div>
+</body>
+</html>
+
+
